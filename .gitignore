@@ -1,0 +1,41 @@
+# Arquivos com chaves de API e dados sensíveis
+api-gemini.txt
+*.env
+.env
+
+# Base de dados SQLite
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache e arquivos temporários
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+instance/
+.webassets-cache
+
+# Diretórios de sessão Flask
+flask_session/
+
+# Arquivos de ambiente virtual
+venv/
+env/
+ENV/
+
+# Logs
+*.log
+logs/
+
+# Arquivos de IDE/editores
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advogado Virtual - Assistente Jurídico</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Advogado Virtual</h1>
+        <p class="subtitle">Assistente Jurídico com IA</p>
+      </header>
+
+      <div class="chat-container">
+        <div class="chat-messages" id="chat-messages">
+          <div class="message bot">
+            <div class="message-content">
+              Olá! Sou seu assistente jurídico virtual. Como posso ajudar você
+              hoje?
+            </div>
+          </div>
+        </div>
+
+        <div class="input-area">
+          <input
+            type="text"
+            id="user-input"
+            placeholder="Digite sua pergunta aqui..."
+            autofocus
+          />
+          <button id="send-btn">Enviar</button>
+        </div>
+      </div>
+
+      <div class="typing-indicator" id="typing-indicator">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div
+        class="feedback-container"
+        id="feedback-container"
+        style="display: none"
+      >
+        <p>A resposta foi útil?</p>
+        <div class="feedback-buttons">
+          <button id="yes-btn">👍 Sim</button>
+          <button id="no-btn">👎 Não</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 Advogado Virtual - Assistente Jurídico com IA</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>
