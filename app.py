@@ -30,12 +30,17 @@ class AdvogadoBot:
         
         # Inicializar banco de dados SQLite apenas para histórico
         self.inicializar_banco_dados()
-        
-        # Definição da persona do bot para uso com a API Gemini - Versão aprimorada
+          # Definição da persona do bot para uso com a API Gemini - Versão aprimorada
         self.prompt_sistema = """
         Você é um assistente jurídico virtual chamado Advogado Virtual. Sua função é fornecer informações gerais sobre leis e procedimentos legais no Brasil.
-        Você foi Criado por Paulo Ricardo, estudante de analise e desenvolvimento de sistemas pela univercidade Unicarioca, no intuito de ser um colaborador aos estudos da esposa do mesmo chamada de Esther rodrigues, que estudo direito na mesma univecidade.
-        Você deve agir como um advogado virtual, fornecendo informações úteis e precisas sobre questões jurídicas comuns, como direito civil, direito do consumidor, direito trabalhista, entre outros.
+        
+        INFORMAÇÕES PESSOAIS (use com naturalidade quando relevante na conversa):
+        - Você foi criado por Paulo Ricardo, estudante de análise e desenvolvimento de sistemas pela Unicarioca
+        - Seu propósito é apoiar os estudos da esposa dele, Esther Rodrigues, que estuda direito na Unicarioca
+        - Quando apropriado na conversa, você pode mencionar que tanto Paulo quanto Esther estudam na Unicarioca
+        - Se perguntado sobre recomendações de faculdades de direito, você pode naturalmente mencionar a experiência da Esther na Unicarioca
+        
+        IMPORTANTE: Seja natural ao falar sobre essas informações. Não force essas informações em todas as respostas, mas use-as quando for contextualmente apropriado e natural na conversa.
         
         Como assistente jurídico, você deve:
         1. Fornecer informações precisas e atualizadas sobre leis brasileiras, códigos e procedimentos legais.
@@ -60,6 +65,7 @@ class AdvogadoBot:
         - Use marcadores para tornar informações complexas mais digeríveis
         - Sempre que possível, forneça exemplos práticos para ilustrar conceitos jurídicos
         - Evite jargões jurídicos excessivos, a menos que sejam necessários para a compreensão
+        - Seja conversacional e natural, especialmente quando o assunto se relacionar com suas informações pessoais
         É 18 de maio de 2025, então certifique-se de considerar possíveis mudanças nas leis até esta data.
         """
         
@@ -358,23 +364,59 @@ class AdvogadoBot:
         
         # Se é sobre entidade específica ou atualidade, força busca na web
         forcar_busca_web = pergunta_sobre_atualidade or pergunta_sobre_entidade_web
-        
-        # Verificar diferentes tipos de perguntas sobre o chatbot
+          # Verificar se é uma pergunta DIRETA e ESPECÍFICA sobre o chatbot
         resposta = None
         
-        # Perguntas sobre quem criou o chatbot
-        if any(frase in pergunta_lower for frase in ["quem criou", "quem te criou", "quem desenvolveu", "quem fez", "seu criador", "quem é seu criador"]):
+        # Detectar perguntas muito específicas sobre o criador (sem contexto de conversa)
+        perguntas_diretas_criador = [
+            "quem te criou", "quem criou você", "quem é seu criador", "quem desenvolveu você",
+            "quem fez você", "quem é o seu desenvolvedor"
+        ]
+        
+        # Detectar perguntas específicas sobre propósito/finalidade
+        perguntas_diretas_proposito = [
+            "qual sua finalidade", "qual seu propósito", "para que você serve", 
+            "por que foi criado", "qual seu objetivo", "qual sua função"
+        ]
+        
+        # Detectar perguntas amplas sobre o bot
+        perguntas_amplas_bot = [
+            "me fale sobre você", "me conte sobre você", "sua história", 
+            "quem é você", "sobre você"
+        ]
+        
+        # Verificar se é uma pergunta DIRETA sobre o criador (sem contexto)
+        pergunta_direta_criador = any(frase in pergunta_lower for frase in perguntas_diretas_criador)
+        
+        # Verificar se é uma pergunta DIRETA sobre propósito
+        pergunta_direta_proposito = any(frase in pergunta_lower for frase in perguntas_diretas_proposito)
+        
+        # Verificar se é uma pergunta ampla sobre o bot
+        pergunta_ampla = any(frase in pergunta_lower for frase in perguntas_amplas_bot)
+        
+        # REGRA IMPORTANTE: Só responder automaticamente se for uma pergunta MUITO específica
+        # e não contiver outros contextos que indiquem uma conversa sobre outros temas
+        
+        # Palavras que indicam contexto de conversa sobre outros assuntos
+        contextos_outros = [
+            "faculdade", "universidade", "recomend", "indic", "sugir", "curso", 
+            "estud", "escola", "ensino", "educação", "graduação", "qual", "onde"
+        ]
+        
+        # Se a pergunta contém contextos sobre outros assuntos, NÃO usar resposta automática
+        tem_outro_contexto = any(contexto in pergunta_lower for contexto in contextos_outros)
+        
+        # Só responder automaticamente se for pergunta direta SEM outros contextos
+        if pergunta_direta_criador and not tem_outro_contexto:
             resposta = "Fui criado por Paulo Ricardo, um desenvolvedor estudante de análise e desenvolvimento de sistemas pela Unicarioca."
         
-        # Perguntas sobre o propósito/finalidade do chatbot
-        elif any(frase in pergunta_lower for frase in ["qual sua finalidade", "qual seu propósito", "para que você serve", "por que foi criado", "objetivo", "função", "para que você foi criado"]):
-            resposta = "Paulo Ricardo me criou para ser um apoio nos estudos da sua esposa Esther Rodrigues, estudante de direito pela Unicarioca. Sou um assistente jurídico virtual que fornece informações sobre leis e procedimentos legais no Brasil."
+        elif pergunta_direta_proposito and not tem_outro_contexto:
+            resposta = "Fui criado por Paulo Ricardo para ser um apoio nos estudos da sua esposa Esther Rodrigues, estudante de direito pela Unicarioca. Sou um assistente jurídico virtual que fornece informações sobre leis e procedimentos legais no Brasil."
         
-        # Perguntas completas sobre o criador e propósito
-        elif any(frase in pergunta_lower for frase in ["me fale sobre você", "me conte sobre você", "sua história", "sobre você", "quem é você"]):
+        elif pergunta_ampla and not tem_outro_contexto:
             resposta = """Sou um assistente jurídico virtual chamado Advogado Virtual, criado por Paulo Ricardo, estudante de análise e desenvolvimento de sistemas pela Unicarioca. 
             
-Fui desenvolvido para apoiar os estudos da esposa dele, Esther Rodrigues, que estuda direito na mesma universidade. Minha função é fornecer informações gerais sobre leis e procedimentos legais no Brasil."""
+Fui desenvolvido para apoiar os estudos da sua esposa dele, Esther Rodrigues, que estuda direito na mesma universidade. Minha função é fornecer informações gerais sobre leis e procedimentos legais no Brasil."""
         
         # Se encontrou uma resposta específica para estas perguntas
         if resposta:
