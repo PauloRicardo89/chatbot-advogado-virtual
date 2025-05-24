@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
         typingIndicator.style.display = "none";
 
         // Adicionar resposta do bot
-        addMessage(data.answer, "bot");
+        addMessage(data.answer, "bot", data.web_search);
 
         // Salvar última resposta
         lastAnswer = data.answer;
@@ -87,14 +87,23 @@ document.addEventListener("DOMContentLoaded", function () {
         );
       });
   }
-
-  function addMessage(text, sender) {
+  function addMessage(text, sender, webSearch = false) {
     const messageDiv = document.createElement("div");
     messageDiv.classList.add("message", sender);
 
     const contentDiv = document.createElement("div");
     contentDiv.classList.add("message-content");
     contentDiv.textContent = text;
+
+    // Adicionar indicador de busca na web se aplicável
+    if (webSearch && sender === "bot") {
+      const webBadge = document.createElement("div");
+      webBadge.classList.add("web-badge");
+      webBadge.innerHTML = "ℹ️ Com dados da web";
+      webBadge.title =
+        "Esta resposta inclui informações atualizadas de sites jurídicos";
+      messageDiv.appendChild(webBadge);
+    }
 
     messageDiv.appendChild(contentDiv);
     chatMessages.appendChild(messageDiv);

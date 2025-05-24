@@ -1,12 +1,15 @@
 # Arquivos com chaves de API e dados sensíveis
 api-gemini.txt
+api-serpapi.txt
 *.env
 .env
 
-# Base de dados SQLite
-*.db
-*.sqlite
-*.sqlite3
+# Base de dados SQLite (exceto chatbot_data.db que apenas armazena histórico)
+conhecimento.db
+# Permitimos o chatbot_data.db no controle de versão para manter a estrutura
+# *EXCETO* em produção, onde deve ser mantido privado
+# Para produção, descomentar a linha abaixo:
+# chatbot_data.db
 
 # Cache e arquivos temporários
 __pycache__/

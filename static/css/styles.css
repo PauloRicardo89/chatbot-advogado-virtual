@@ -5,36 +5,47 @@
   font-family: "Roboto", sans-serif;
 }
 
+html,
 body {
+  height: 100vh;
+  overflow: hidden; /* Remove qualquer scroll da página */
   background-color: #f5f5f5;
+}
+
+body {
   color: #333;
-  line-height: 1.6;
+  line-height: 1.4;
+  width: 100%;
 }
 
 .container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
-  min-height: 100vh;
+  padding: 8px; /* Reduzido para economizar espaço */
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 header {
   text-align: center;
-  margin-bottom: 30px;
-  padding: 20px 0;
+  margin-bottom: 8px; /* Reduzido de 30px */
+  padding: 8px 0; /* Reduzido de 20px */
   border-bottom: 1px solid #e0e0e0;
+  flex-shrink: 0; /* Não permite que o header encolha */
 }
 
 header h1 {
   color: #2c3e50;
-  margin-bottom: 10px;
+  margin-bottom: 4px; /* Reduzido */
+  font-size: 1.5rem; /* Reduzido */
 }
 
 .subtitle {
   color: #7f8c8d;
-  font-size: 18px;
+  font-size: 14px; /* Reduzido de 18px */
 }
 
 .chat-container {
@@ -45,27 +56,84 @@ header h1 {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin-bottom: 8px; /* Reduzido */
+  min-height: 0; /* Permite que encolha */
 }
 
 .chat-messages {
   flex: 1;
-  padding: 20px;
+  padding: 12px; /* Reduzido de 20px */
   overflow-y: auto;
-  max-height: 500px;
+  overflow-x: hidden;
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  scroll-behavior: smooth;
+  min-height: 0;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
 }
 
 .message {
-  margin-bottom: 15px;
+  margin-bottom: 10px; /* Reduzido de 15px */
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .message-content {
-  padding: 12px 16px;
-  border-radius: 18px;
+  padding: 8px 12px; /* Reduzido de 12px 16px */
+  border-radius: 15px; /* Ligeiramente menor */
   max-width: 80%;
   word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  white-space: pre-wrap;
+  line-height: 1.3; /* Ligeiramente reduzido */
+  font-size: 14px; /* Tamanho da fonte reduzido */
+}
+
+/* Estilo para links dentro das mensagens */
+.message-content a {
+  color: inherit;
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.user .message-content a {
+  color: #a8d1ff;
+}
+
+.bot .message-content a {
+  color: #2c3e50;
+}
+
+/* Estilo para código ou texto formatado */
+.message-content code {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: "Courier New", monospace;
+  font-size: 0.9em;
+  word-break: break-all;
 }
 
 .user {
@@ -84,18 +152,38 @@ header h1 {
   border-bottom-left-radius: 5px;
 }
 
+/* Estilo para o indicador de busca na web */
+.web-badge {
+  font-size: 0.6rem; /* Reduzido para economizar espaço */
+  padding: 1px 4px; /* Reduzido */
+  border-radius: 8px; /* Menor */
+  background-color: #e3f2fd;
+  color: #1565c0;
+  margin-bottom: 3px; /* Reduzido */
+  display: inline-block;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  cursor: help;
+}
+
+.message.bot .web-badge {
+  align-self: flex-start;
+  margin-left: 6px; /* Reduzido */
+}
+
 .input-area {
   display: flex;
-  padding: 15px;
+  padding: 10px; /* Reduzido de 15px */
   border-top: 1px solid #e0e0e0;
+  flex-shrink: 0; /* Não permite que a área de input encolha */
 }
 
 #user-input {
   flex: 1;
-  padding: 12px 15px;
+  padding: 10px 12px; /* Reduzido */
   border: 1px solid #ddd;
-  border-radius: 25px;
-  font-size: 16px;
+  border-radius: 20px; /* Ligeiramente menor */
+  font-size: 14px; /* Reduzido de 16px */
   outline: none;
   transition: border-color 0.3s;
 }
@@ -108,11 +196,12 @@ header h1 {
   background-color: #2c3e50;
   color: white;
   border: none;
-  border-radius: 25px;
-  padding: 0 20px;
-  margin-left: 10px;
+  border-radius: 20px; /* Ligeiramente menor */
+  padding: 0 16px; /* Reduzido */
+  margin-left: 8px; /* Reduzido */
   cursor: pointer;
   transition: background-color 0.3s;
+  font-size: 14px; /* Tamanho da fonte reduzido */
 }
 
 #send-btn:hover {
@@ -121,20 +210,21 @@ header h1 {
 
 footer {
   text-align: center;
-  padding: 20px 0;
+  padding: 8px 0; /* Reduzido de 20px */
   color: #7f8c8d;
-  font-size: 14px;
+  font-size: 12px; /* Reduzido de 14px */
+  flex-shrink: 0; /* Não permite que o footer encolha */
 }
 
 .typing-indicator {
   display: none;
-  padding: 10px 20px;
-  margin-bottom: 15px;
+  padding: 6px 12px; /* Reduzido de 10px 20px */
+  margin-bottom: 8px; /* Reduzido de 15px */
 }
 
 .typing-indicator span {
-  height: 10px;
-  width: 10px;
+  height: 8px; /* Reduzido de 10px */
+  width: 8px; /* Reduzido de 10px */
   float: left;
   margin: 0 1px;
   background-color: #9e9ea1;
@@ -165,29 +255,30 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 15px;
-  margin-bottom: 20px;
+  padding: 8px; /* Reduzido de 15px */
+  margin-bottom: 8px; /* Reduzido de 20px */
   background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px; /* Reduzido de 10px */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra mais sutil */
 }
 
 .feedback-container p {
-  margin-right: 15px;
-  font-size: 16px;
+  margin-right: 10px; /* Reduzido de 15px */
+  font-size: 14px; /* Reduzido de 16px */
 }
 
 .feedback-buttons {
   display: flex;
-  gap: 10px;
+  gap: 6px; /* Reduzido de 10px */
 }
 
 .feedback-buttons button {
-  padding: 8px 15px;
+  padding: 6px 12px; /* Reduzido de 8px 15px */
   border: none;
-  border-radius: 5px;
+  border-radius: 4px; /* Reduzido de 5px */
   cursor: pointer;
   transition: all 0.3s;
+  font-size: 12px; /* Tamanho de fonte menor */
 }
 
 #yes-btn {
@@ -210,10 +301,112 @@ footer {
 
 @media (max-width: 768px) {
   .container {
-    padding: 10px;
+    padding: 6px; /* Reduzido */
+  }
+
+  .chat-messages {
+    padding: 10px; /* Reduzido */
   }
 
   .message-content {
-    max-width: 90%;
+    max-width: 90%; /* Ajustado */
+    font-size: 13px; /* Ligeiramente menor */
+    padding: 8px 10px; /* Reduzido */
+  }
+
+  #user-input {
+    font-size: 16px; /* Evita zoom no iOS */
+    padding: 8px 10px; /* Reduzido */
+  }
+
+  #send-btn {
+    padding: 0 12px; /* Reduzido */
+    font-size: 13px; /* Reduzido */
+  }
+
+  .input-area {
+    padding: 8px; /* Reduzido */
+  }
+
+  header h1 {
+    font-size: 1.3rem; /* Ligeiramente menor */
+  }
+
+  .subtitle {
+    font-size: 13px; /* Reduzido */
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 4px; /* Reduzido */
+  }
+
+  .chat-container {
+    border-radius: 6px; /* Ligeiramente maior */
+    margin-bottom: 4px; /* Reduzido */
+  }
+
+  .chat-messages {
+    padding: 8px; /* Reduzido */
+  }
+
+  .message-content {
+    max-width: 95%; /* Ajustado */
+    font-size: 13px; /* Reduzido */
+    padding: 6px 10px; /* Reduzido */
+  }
+
+  header {
+    padding: 6px 0; /* Reduzido */
+    margin-bottom: 6px; /* Reduzido */
+  }
+
+  header h1 {
+    font-size: 1.2rem; /* Reduzido */
+  }
+
+  .subtitle {
+    font-size: 12px; /* Reduzido */
+  }
+
+  .input-area {
+    padding: 6px; /* Reduzido */
+  }
+
+  #user-input {
+    padding: 8px 10px; /* Reduzido */
+    font-size: 16px; /* Mantém para evitar zoom no iOS */
+  }
+
+  #send-btn {
+    padding: 0 10px; /* Reduzido */
+    margin-left: 6px; /* Reduzido */
+    font-size: 12px; /* Reduzido */
+  }
+
+  footer {
+    padding: 6px 0; /* Reduzido */
+    font-size: 11px; /* Reduzido */
+  }
+
+  .web-badge {
+    font-size: 0.55rem; /* Ainda menor em mobile */
+    padding: 1px 3px; /* Reduzido */
+  }
+
+  .feedback-container {
+    padding: 6px; /* Reduzido */
+    margin-bottom: 6px; /* Reduzido */
+  }
+
+  .feedback-container p {
+    font-size: 12px; /* Reduzido */
+    margin-right: 8px; /* Reduzido */
+  }
+
+  .feedback-buttons button {
+    padding: 4px 8px; /* Reduzido */
+    font-size: 11px; /* Reduzido */
   }
 }
