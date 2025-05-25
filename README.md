@@ -77,4 +77,4 @@ Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para d
 
 ## Contato
 
-Para dúvidas ou sugestões, entre em contato através de [seu-email@exemplo.com].
+Para dúvidas ou sugestões, entre em contato através de pr.pauloricardo@live.com
